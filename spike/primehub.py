@@ -1,5 +1,3 @@
-# primehub.py
-
 class PrimeHub:
     """
     A class to represent the SPIKE Prime Hub.
@@ -266,21 +264,35 @@ class StatusLight:
 
 class MotionSensor:
     """
-    Represents the Motion Sensor inside the Hub.
+    Represents the Motion Sensor inside the SPIKE Prime Hub.
+
+    The Motion Sensor combines a three-axis accelerometer and a three-axis gyroscope.
+    It can detect gestures, orientation, and measure angles.
 
     Example:
-        from spike import PrimeHub
+        from spike import MotionSensor
 
-        hub = PrimeHub()
+        # Initialize the Motion Sensor
+        motion_sensor = MotionSensor()
 
-        yaw = hub.motion_sensor.get_yaw_angle()
+        # Get the yaw angle
+        yaw_angle = motion_sensor.get_yaw_angle()
     """
+
+    def __init__(self):
+        """
+        Initialize the Motion Sensor.
+        """
+        pass
 
     # Events
 
     def was_gesture(self, gesture):
         """
-        Tests whether a gesture has occurred since the last time this method was called.
+        Tests whether a gesture has occurred since the last time this method was called
+        or since the beginning of the program (for the first use).
+
+        Once this method returns True, the gesture must occur again for it to return True again.
 
         Args:
             gesture (str): The name of the gesture.
@@ -289,11 +301,21 @@ class MotionSensor:
             'shaken', 'tapped', 'doubletapped', 'falling', None
 
         Returns:
-            bool: True if the gesture has occurred, otherwise False.
+            bool: True if the gesture has occurred since the last check, otherwise False.
 
         Raises:
             TypeError: If `gesture` is not a string.
             ValueError: If `gesture` is not one of the allowed values.
+
+        Example:
+            from spike import MotionSensor
+            from spike.control import wait_for_seconds
+
+            motion_sensor = MotionSensor()
+
+            wait_for_seconds(5)
+            if motion_sensor.was_gesture('shaken'):
+                print("The Hub was shaken!")
         """
         return False
 
@@ -301,11 +323,27 @@ class MotionSensor:
         """
         Waits until a new gesture happens.
 
+        The first time this method is called, it returns immediately with the detected gesture.
+        After that, it waits until the Motion Sensor detects a gesture that is different from the
+        gesture that was detected the last time this method was used.
+
         Returns:
             str: The new gesture.
 
         Possible Values:
             'shaken', 'tapped', 'doubletapped', 'falling'
+
+        Example:
+            from spike import MotionSensor
+
+            motion_sensor = MotionSensor()
+
+            while True:
+                gesture = motion_sensor.wait_for_new_gesture()
+                if gesture == 'shaken':
+                    print("Shaken detected!")
+                elif gesture == 'tapped':
+                    print("Tapped detected!")
         """
         return 'tapped'
 
@@ -313,13 +351,24 @@ class MotionSensor:
         """
         Waits until the orientation of the Hub changes.
 
-        The first time this method is called, it will immediately return the current value. After that, calling this method will block the program until the Hub's orientation has changed since the previous time this method was called.
+        The first time this method is called, it will immediately return the current orientation.
+        After that, calling this method will block the program until the Hub's orientation has
+        changed since the previous time this method was called.
 
         Returns:
             str: The Hub's new orientation.
 
         Possible Values:
             'front', 'back', 'up', 'down', 'leftside', 'rightside'
+
+        Example:
+            from spike import MotionSensor
+
+            motion_sensor = MotionSensor()
+
+            while True:
+                orientation = motion_sensor.wait_for_new_orientation()
+                print(f"New orientation: {orientation}")
         """
         return 'front'
 
@@ -334,18 +383,34 @@ class MotionSensor:
 
         Possible Values:
             'front', 'back', 'up', 'down', 'leftside', 'rightside'
+
+        Example:
+            from spike import MotionSensor
+
+            motion_sensor = MotionSensor()
+
+            orientation = motion_sensor.get_orientation()
+            print(f"Current orientation: {orientation}")
         """
         return 'front'
 
     def get_gesture(self):
         """
-        Retrieves the most recently-detected gesture.
+        Retrieves the most recently detected gesture.
 
         Returns:
             str: The gesture.
 
         Possible Values:
             'shaken', 'tapped', 'doubletapped', 'falling'
+
+        Example:
+            from spike import MotionSensor
+
+            motion_sensor = MotionSensor()
+
+            gesture = motion_sensor.get_gesture()
+            print(f"Latest gesture: {gesture}")
         """
         return 'tapped'
 
@@ -357,6 +422,14 @@ class MotionSensor:
 
         Returns:
             int: The roll angle in degrees (-180 to 180).
+
+        Example:
+            from spike import MotionSensor
+
+            motion_sensor = MotionSensor()
+
+            roll_angle = motion_sensor.get_roll_angle()
+            print(f"Roll angle: {roll_angle}")
         """
         return 0
 
@@ -368,6 +441,14 @@ class MotionSensor:
 
         Returns:
             int: The pitch angle in degrees (-180 to 180).
+
+        Example:
+            from spike import MotionSensor
+
+            motion_sensor = MotionSensor()
+
+            pitch_angle = motion_sensor.get_pitch_angle()
+            print(f"Pitch angle: {pitch_angle}")
         """
         return 0
 
@@ -379,6 +460,14 @@ class MotionSensor:
 
         Returns:
             int: The yaw angle in degrees (-180 to 180).
+
+        Example:
+            from spike import MotionSensor
+
+            motion_sensor = MotionSensor()
+
+            yaw_angle = motion_sensor.get_yaw_angle()
+            print(f"Yaw angle: {yaw_angle}")
         """
         return 0
 
@@ -387,5 +476,13 @@ class MotionSensor:
     def reset_yaw_angle(self):
         """
         Sets the yaw angle to 0.
+
+        Example:
+            from spike import MotionSensor
+
+            motion_sensor = MotionSensor()
+
+            motion_sensor.reset_yaw_angle()
+            print("Yaw angle reset to 0.")
         """
         pass

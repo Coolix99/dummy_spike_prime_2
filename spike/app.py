@@ -1,5 +1,3 @@
-# app.py
-
 class App:
     """
     A class to represent the SPIKE Prime App, allowing interaction with the device (tablet or computer).
