@@ -2,14 +2,6 @@
 
 This is a dummy library designed for syntax highlighting and autocompletion when programming SPIKE Prime using Python in VS Code. This library mimics the classes and methods available in the SPIKE Prime firmware version 2 but contains no actual functionality.
 
-## Installation
-
-To install this package locally for development purposes:
-
-```bash
-pip install -e .
-```
-
 ## Reference Documentation
 
 For detailed information on SPIKE Prime classes and methods for firmware version 2, refer to the official documentation:
