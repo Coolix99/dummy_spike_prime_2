@@ -4,7 +4,7 @@ This is a dummy library designed for syntax highlighting and autocompletion when
 
 ## Reference Documentation
 
-For detailed information on SPIKE Prime classes and methods for firmware version 2, refer to the official documentation:
+For detailed information on SPIKE Prime classes and methods for firmware version 2, refer to the documentation:
 
 [Tufts CEEO SPIKE Prime Python Documentation (Firmware v2)](https://tuftsceeo.github.io/SPIKEPythonDocs/SPIKE2.html)
 
